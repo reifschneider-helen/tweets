@@ -1,0 +1,56 @@
+@import "../../styles/abstracts/mixins";
+@import "../../styles/abstracts/variables";
+
+.card {
+  width: $card-width;
+  height: auto;
+  padding: $spacing-lg;
+  background-color: white;
+  box-shadow: $card-shadow;
+  border-radius: $card-border-radius;
+  .card-top {
+    display: flex;
+    justify-content: left;
+    margin-bottom: $s;
+    .profile-img {
+      margin-right: $s;
+      @include round-img($xl);
+    }
+    .user-name {
+      height: 49px;
+      .text-primary {
+        @include text-block(
+          $color-primary,
+          $font-size-large,
+          $font-weight-semibold,
+          $spacing-xl
+        );
+      }
+      .text-link {
+        @include text-block(
+          $color-secondary,
+          $font-size-small,
+          $font-weight-normal,
+          $spacing-md
+        );
+      }
+    }
+  }
+  .text-secondary {
+    @include text-block(
+      $color-secondary,
+      $font-size-medium,
+      $font-weight-normal,
+      $spacing-lg
+    );
+  }
+  @media (max-width: $breakpoint-mobile) {
+    .card-top {
+      @include mobile-media;
+    }
+
+    .profile-img {
+      margin-bottom: $xs;
+    }
+  }
+}

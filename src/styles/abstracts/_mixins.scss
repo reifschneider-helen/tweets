@@ -1,0 +1,18 @@
+@mixin text-block($color, $fontSize, $fontWeight, $lineHeight) {
+  color: $color;
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  line-height: $lineHeight;
+}
+
+@mixin round-img($size) {
+  width: $size;
+  height: $size;
+  border-radius: 100%;
+}
+
+@mixin mobile-media {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
