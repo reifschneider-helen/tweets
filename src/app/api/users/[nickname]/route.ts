@@ -18,7 +18,7 @@ const USER_QUERY = `*[_type == "user" && nickname == $nickname][0] {
 const USER_TWEETS_QUERY = `*[
   _type == "tweet" 
   && user->nickname == $nickname
-] | order(createdAt desc)[$start...$end] {
+] | order(createdAt desc)[$start..$end] {
   _id,
   text,
   createdAt,
@@ -45,14 +45,13 @@ export async function GET(
     const tweetsPerPage = 3;
 
     const start = tweetsPage * tweetsPerPage;
-    const end = start + tweetsPerPage;
 
     const [user, tweets] = await Promise.all([
       client.fetch(USER_QUERY, { nickname }),
       client.fetch(USER_TWEETS_QUERY, {
         nickname,
         start,
-        end,
+        end: start + tweetsPerPage, // Lade einen extra Tweet um zu prüfen ob mehr da sind
       }),
     ]);
 
@@ -60,10 +59,14 @@ export async function GET(
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    // Prüfe ob mehr Tweets vorhanden sind
+    const hasMore = tweets.length > tweetsPerPage;
+    const tweetsToReturn = hasMore ? tweets.slice(0, tweetsPerPage) : tweets;
+
     return NextResponse.json({
       user,
-      tweets,
-      hasMore: tweets.length === tweetsPerPage,
+      tweets: tweetsToReturn,
+      hasMore,
     });
   } catch (error) {
     console.error("Error fetching user data:", error);

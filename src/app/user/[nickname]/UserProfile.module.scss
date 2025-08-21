@@ -164,10 +164,14 @@
   }
 
   .tweetsGrid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: $spacing-lg;
     margin-bottom: $spacing-xl;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   .loadMoreContainer {
