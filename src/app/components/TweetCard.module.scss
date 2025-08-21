@@ -1,3 +1,4 @@
+@use "sass:color";
 @import "../../styles/abstracts/mixins";
 @import "../../styles/abstracts/variables";
 
@@ -8,16 +9,44 @@
   background-color: white;
   box-shadow: $card-shadow;
   border-radius: $card-border-radius;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
   .card-top {
     display: flex;
-    justify-content: left;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: $s;
-    .profile-img {
+
+    .profile-link {
       margin-right: $s;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    .profile-img {
       @include round-img($xl);
     }
+
     .user-name {
+      flex: 1;
       height: 49px;
+
+      .name-link {
+        text-decoration: none;
+
+        &:hover .text-primary {
+          color: color.adjust($color-primary, $lightness: -10%);
+        }
+      }
+
       .text-primary {
         @include text-block(
           $color-primary,
@@ -25,28 +54,69 @@
           $font-weight-semibold,
           $spacing-xl
         );
+        margin: 0;
+        transition: color 0.2s ease;
       }
+
       .text-link {
         @include text-block(
           $color-secondary,
           $font-size-small,
-          $font-weight-normal,
+          $font-weight-medium,
           $spacing-md
         );
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: color.adjust($color-secondary, $lightness: -15%);
+        }
       }
     }
+
+    .tweet-date {
+      font-size: $font-size-small;
+      color: color.adjust($color-secondary, $lightness: 20%);
+      white-space: nowrap;
+      margin-left: $s;
+    }
   }
+
   .text-secondary {
     @include text-block(
       $color-secondary,
       $font-size-medium,
-      $font-weight-normal,
+      $font-weight-medium,
       $spacing-lg
     );
+    margin: 0 0 $s 0;
   }
+
+  .tweet-stats {
+    display: flex;
+    gap: $spacing-lg;
+    margin-top: $s;
+    padding-top: $s;
+    border-top: 1px solid color.adjust($color-secondary, $lightness: 40%);
+
+    .stat-item {
+      font-size: $font-size-small;
+      color: $color-secondary;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+
   @media (max-width: $breakpoint-mobile) {
     .card-top {
       @include mobile-media;
+      flex-direction: column;
+
+      .tweet-date {
+        margin-left: 0;
+        margin-top: $xs;
+      }
     }
 
     .profile-img {

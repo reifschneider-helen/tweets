@@ -10,7 +10,9 @@ $font-size-medium: 16px;
 $font-size-large: 18px;
 
 $font-weight-normal: 400;
+$font-weight-medium: 500;
 $font-weight-semibold: 600;
+$font-weight-bold: 700;
 
 $line-height-small: 20px;
 $line-height-medium: 24px;
@@ -22,6 +24,7 @@ $spacing-sm: 16px;
 $spacing-md: 20px;
 $spacing-lg: 24px;
 $spacing-xl: 28px;
+$spacing-xxl: 32px;
 
 //Size
 $xs: 12px;
@@ -34,6 +37,11 @@ $xl: 48px;
 $card-width: 340px;
 $card-border-radius: 8px;
 $card-shadow: 0px 1px 1px 1px $color-shadow;
+
+// Border radius
+$border-radius-sm: 4px;
+$border-radius-md: 6px;
+$border-radius-lg: 12px;
 
 // Breakpoints
 $breakpoint-mobile: 350px;

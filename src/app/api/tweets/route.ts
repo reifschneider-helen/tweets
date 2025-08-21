@@ -1,16 +1,26 @@
 import { NextResponse } from "next/server";
 import { client } from "../../../sanity/client";
 
+// Query für alle Tweets mit User-Daten
 const TWEETS_QUERY = `*[
-  _type == "tweetCard"
-  && defined(nickname)
-]|order(_createdAt desc){
+  _type == "tweet" 
+  && isPublished == true
+] | order(publishedAt desc)[0...20] {
   _id,
-  name,
-  nickname,
   text,
-  photo,
-  _createdAt
+  publishedAt,
+  likes,
+  retweets,
+  author-> {
+    _id,
+    name,
+    nickname,
+    profileImage {
+      asset {
+        _ref
+      }
+    }
+  }
 }`;
 
 export async function GET() {
