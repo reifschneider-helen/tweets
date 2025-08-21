@@ -1,36 +1,204 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tweets App 🐦
 
-## Getting Started
+A modern, responsive tweet application built with Next.js 15 and Sanity CMS.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Sanity CMS Integration**: Complete content management solution
+- **Pagination**: "Load more" functionality for better performance
+- **TypeScript**: Fully typed for better developer experience
+- **Next.js 15**: Latest features with Turbopack for fast development
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15.4.6 with React 19
+- **CMS**: Sanity.io
+- **Styling**: SCSS Modules
+- **TypeScript**: Full type safety
+- **Build Tool**: Turbopack (Next.js)
+- **Image Optimization**: Next.js Image + Sanity Image URLs
+
+## 📋 Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Sanity Account
+
+## 🔧 Installation
+
+1. **Clone repository**
+
+   ```bash
+   git clone https://github.com/reifschneider-helen/tweets
+   cd tweets
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Sanity configuration**
+
+   - Create a Sanity project on [sanity.io](https://sanity.io)
+   - Copy your Project ID
+   - Configure `src/sanity/client.ts` with your credentials
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+The application will be available at `http://localhost:3000`.
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── tweets/          # API Route for tweets with pagination
+│   │   └── users/[nickname] # API Route for user profiles
+│   ├── components/
+│   │   └── TweetCard.tsx    # Tweet component
+│   ├── user/[nickname]/     # User Profile Pages
+│   ├── globals.css          # Global styles
+│   ├── layout.tsx           # App layout
+│   └── page.tsx             # Main page with tweet list
+├── sanity/
+│   └── client.ts            # Sanity client configuration
+└── types/
+    └── index.ts             # TypeScript definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Styling
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The project has:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **SCSS Modules**: For user profiles and complex components
+- **Responsive Design**: Automatic adaptation to different screen sizes
 
-## Learn More
+### User Profile Grid Layout
 
-To learn more about Next.js, take a look at the following resources:
+- **Mobile**: 1 tweet per row
+- **Desktop**: 2 tweets side by side
+- **Automatic adaptation** with CSS Grid
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📊 Sanity Schema
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### User Schema
 
-## Deploy on Vercel
+```typescript
+{
+  _id: string;
+  name: string;
+  nickname: string;
+  bio?: string;
+  photo?: SanityImageAsset;
+  joinedDate: string;
+  totalTweets: number;
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Tweet Schema
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```typescript
+{
+  _id: string;
+  text: string;
+  createdAt: string;
+  user: UserReference;
+}
+```
+
+## 🔄 API Endpoints
+
+### GET `/api/tweets`
+
+- **Parameters**: `page`, `perPage`
+- **Response**: `{ tweets: Tweet[], hasMore: boolean }`
+- **Description**: Load tweets with pagination
+
+### GET `/api/users/[nickname]`
+
+- **Parameters**: `tweetsPage`
+- **Response**: `{ user: UserWithStats, tweets: Tweet[], hasMore: boolean }`
+- **Description**: Load user profile with tweets
+
+## ⚡ Performance Features
+
+- **Server-Side Rendering**: Optimal SEO and loading times
+- **Image Optimization**: Automatic image optimization with Next.js
+- **Pagination**: Lazy loading for better performance
+- **Caching**: Sanity CDN integration with configurable cache
+- **Turbopack**: Fast development environment
+
+## 🎯 Main Features
+
+### Main Page
+
+- List of latest 6 tweets
+- "Load more" button for pagination
+- Responsive grid layout
+- User links to profiles
+
+### User Profile
+
+- Detailed user information
+- Bio and join date
+- Tweet statistics
+- Responsive 2-column layout for tweets
+- Pagination for user tweets
+
+### Tweet Cards
+
+- User avatar and name
+- Tweet text with formatting
+- Timestamp
+- Hover effects
+- Responsive design
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+```bash
+npm run build
+```
+
+### Other Platforms
+
+```bash
+npm run build
+npm start
+```
+
+## 🔧 Configuration
+
+### Sanity Client (`src/sanity/client.ts`)
+
+```typescript
+export const client = createClient({
+  projectId: "your-project-id",
+  dataset: "production",
+  useCdn: false,
+  apiVersion: "2024-01-01",
+});
+```
+
+### Environment Variables
+
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
+NEXT_PUBLIC_SANITY_DATASET=production
+```
+
+## 🛠️ Development
+
+### Available Scripts
+
+- `npm run dev` - Development server with Turbopack
+- `npm run build` - Production build
+- `npm run start` - Production server
+- `npm run lint` - ESLint checking
