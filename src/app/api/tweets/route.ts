@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { client } from "../../../sanity/client";
 
-// Query für alle Tweets mit User-Daten
 const TWEETS_QUERY = `*[
   _type == "tweet" 
   && isPublished == true
@@ -9,8 +8,6 @@ const TWEETS_QUERY = `*[
   _id,
   text,
   publishedAt,
-  likes,
-  retweets,
   author-> {
     _id,
     name,

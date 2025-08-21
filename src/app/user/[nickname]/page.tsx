@@ -34,7 +34,6 @@ export default function UserProfilePage() {
   const [error, setError] = useState<string | null>(null);
   const [tweetsPage, setTweetsPage] = useState(0);
 
-  // Helper function to safely extract nickname
   const extractNickname = (nickname: any): string => {
     if (typeof nickname === "string") return nickname;
     if (nickname && typeof nickname === "object" && nickname.current) {
@@ -116,14 +115,12 @@ export default function UserProfilePage() {
 
   return (
     <main className="container mx-auto min-h-screen max-w-4xl p-8">
-      {/* Header mit Zurück-Button */}
       <div className={styles.header}>
         <Link href="/" className={styles.backButton}>
           ← Zurück
         </Link>
       </div>
 
-      {/* User Profile Header */}
       <div className={styles.profileHeader}>
         <div className={styles.profileImageContainer}>
           <Image
@@ -151,23 +148,13 @@ export default function UserProfilePage() {
         </div>
       </div>
 
-      {/* User Stats */}
       <div className={styles.stats}>
         <div className={styles.statItem}>
           <span className={styles.statNumber}>{user.totalTweets}</span>
           <span className={styles.statLabel}>Posts</span>
         </div>
-        <div className={styles.statItem}>
-          <span className={styles.statNumber}>{user.totalLikes || 0}</span>
-          <span className={styles.statLabel}>Likes</span>
-        </div>
-        <div className={styles.statItem}>
-          <span className={styles.statNumber}>{user.totalRetweets || 0}</span>
-          <span className={styles.statLabel}>Retweets</span>
-        </div>
       </div>
 
-      {/* User Tweets */}
       <section className={styles.tweetsSection}>
         <h2 className={styles.sectionTitle}>Posts von {user.name}</h2>
 
@@ -190,8 +177,6 @@ export default function UserProfilePage() {
                   }
                   text={tweet.text}
                   publishedAt={tweet.createdAt}
-                  likes={0}
-                  retweets={0}
                 />
               ))}
             </div>

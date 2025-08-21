@@ -30,7 +30,6 @@ export default function TweetCard({
     });
   };
 
-  // Ensure nickname is a string
   const safeNickname =
     typeof nickname === "string" ? nickname : String(nickname || "unknown");
 
@@ -62,15 +61,6 @@ export default function TweetCard({
         )}
       </div>
       <p className={styles["text-secondary"]}>{text}</p>
-
-      {(likes > 0 || retweets > 0) && (
-        <div className={styles["tweet-stats"]}>
-          {likes > 0 && <span className={styles["stat-item"]}>❤️ {likes}</span>}
-          {retweets > 0 && (
-            <span className={styles["stat-item"]}>🔄 {retweets}</span>
-          )}
-        </div>
-      )}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { client } from "@/sanity/client";
 
-// Query für User-Details mit Stats
 const USER_QUERY = `*[_type == "user" && nickname == $nickname][0] {
   _id,
   name,
@@ -16,7 +15,6 @@ const USER_QUERY = `*[_type == "user" && nickname == $nickname][0] {
   "totalTweets": count(*[_type == "tweet" && user._ref == ^._id])
 }`;
 
-// Query für User Tweets mit Paginierung
 const USER_TWEETS_QUERY = `*[
   _type == "tweet" 
   && user->nickname == $nickname
@@ -49,7 +47,6 @@ export async function GET(
     const start = tweetsPage * tweetsPerPage;
     const end = start + tweetsPerPage;
 
-    // User-Daten und Tweets parallel laden
     const [user, tweets] = await Promise.all([
       client.fetch(USER_QUERY, { nickname }),
       client.fetch(USER_TWEETS_QUERY, {
